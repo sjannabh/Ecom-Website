@@ -3,7 +3,25 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.35027.167
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ecom-Website.Api", "Ecom-Website.Api\Ecom-Website.Api.csproj", "{44046881-84B7-481B-A8B4-C50663352482}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ecom-Website.Entity", "Ecom-Website.Entity\Ecom-Website.Entity.csproj", "{98CF846E-ECFC-4EE4-8BE2-5CB4C86CBCFF}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{44046881-84B7-481B-A8B4-C50663352482}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44046881-84B7-481B-A8B4-C50663352482}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44046881-84B7-481B-A8B4-C50663352482}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44046881-84B7-481B-A8B4-C50663352482}.Release|Any CPU.Build.0 = Release|Any CPU
+		{98CF846E-ECFC-4EE4-8BE2-5CB4C86CBCFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98CF846E-ECFC-4EE4-8BE2-5CB4C86CBCFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{98CF846E-ECFC-4EE4-8BE2-5CB4C86CBCFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{98CF846E-ECFC-4EE4-8BE2-5CB4C86CBCFF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
