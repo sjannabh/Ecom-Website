@@ -10,37 +10,37 @@ namespace Ecom_Website.Api.Repository
         private readonly IMongoCollection<Product> _productCollection;
         public ProductRepository(IConfiguration config)
         {
-            MongoClient client = new MongoClient(config["ConnectionStrings:Mongo:ConnectionString"]);
+            MongoClient client = new MongoClient(config["ConnectionStrings:MongoCompass:ConnectionString"]);
             var database = client.GetDatabase("MyDb");
-            _productCollection = database.GetCollection<Product>("products");
+            _productCollection = database.GetCollection<Product>("dummyproducts");
 
         }
-        public Task<ObjectId> Create(Product product)
+        public async Task Create(Product product)
         {
-            throw new NotImplementedException();
+            await _productCollection.InsertOneAsync(product);
         }
 
 
         public async Task<List<Product>> GetAll()
         {
+
             return await _productCollection.Find(_ => true).Limit(5).ToListAsync();
             
         }
 
         public async Task<Product> GetProductById(string ProductId)
         {
-           return await _productCollection.Find(x => x.product_id == ProductId).FirstOrDefaultAsync();
-        }
+           return await _productCollection.Find(x => x.ProductId == ProductId).FirstOrDefaultAsync();
+        } 
 
-       
-
-        public Task<bool> UpdateProduct(ObjectId Id, Product product)
+        public async Task Update(string productId, Product product)
         {
-            throw new NotImplementedException();
+           await _productCollection.ReplaceOneAsync(x => x.ProductId == productId, product);
         }
-        public Task<bool> DeleteProduct(ObjectId Id)
+        public async Task Delete(string productId)
         {
-            throw new NotImplementedException();
+            await _productCollection.DeleteOneAsync(x => x.ProductId == productId);
+
         }
     }
 }

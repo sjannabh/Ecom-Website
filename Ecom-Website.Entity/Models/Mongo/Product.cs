@@ -9,12 +9,12 @@ namespace Ecom_Website.Entity.Models.Mongo
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         [JsonPropertyName("_id")]
-        public string Id { get; set; }
+        public string? Id { get; set; }
 
 
         [JsonPropertyName("product_id")]
         [BsonElement("product_id")]
-        public string product_id { get; set; }
+        public string ProductId { get; set; }
 
         [JsonPropertyName("product_name")]
         [BsonElement("product_name")]

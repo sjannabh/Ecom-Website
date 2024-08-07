@@ -10,6 +10,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IProductRepository, ProductRepository > ();
+builder.Services.AddScoped<IReviewRepository, ReviewRepository > ();
+builder.Services.AddScoped<IUserRepository, UserRepository > ();
+builder.Services.AddScoped<IProductRecRepository, PopularRecRepository > ();
 
 var app = builder.Build();
 

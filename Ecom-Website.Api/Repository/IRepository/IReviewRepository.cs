@@ -4,6 +4,18 @@ namespace Ecom_Website.Api.Repository.IRepository
 {
     public interface IReviewRepository
     {
-        public Task<List<Review>> GetAll();
+        // create
+        Task Create(Review review);
+        //Get all reviews
+        Task<List<Review>> GetAll();
+
+        //get by productid
+        Task<Review> GetReviewById(string productId);
+
+        //Update product
+        Task Update(string productId, Review review);   
+
+        //Delete Review
+        Task Delete(string productId);
     }
 }

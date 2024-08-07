@@ -6,15 +6,15 @@ namespace Ecom_Website.Api.Repository.IRepository
     public interface IProductRepository
     {
         //create new product
-        Task<ObjectId> Create(Product product);
+        Task Create(Product product);
         //get all products
         Task<List<Product>> GetAll();
        
         //get product by productId
         Task<Product> GetProductById(string ProductId);
-        Task<bool> UpdateProduct(ObjectId Id, Product product);
+        Task Update(string productId, Product product);
         //delete product
-        Task<bool> DeleteProduct(ObjectId Id);
+        Task Delete(string productId);
 
 
     }
