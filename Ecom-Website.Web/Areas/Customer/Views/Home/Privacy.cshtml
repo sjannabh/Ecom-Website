@@ -1,0 +1,168 @@
+﻿@{
+    ViewData["Title"] = "Privacy Policy";
+}
+
+@section Styles {
+    <style>
+        .movie-list {
+            display: flex;
+            overflow-y: hidden;
+            overflow-x: scroll;
+        }
+
+            .movie-list::-webkit-scrollbar {
+                width: 15px;
+                height: 10px;
+            }
+
+            .movie-list::-webkit-scrollbar-track {
+                box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+            }
+
+            .movie-list::-webkit-scrollbar-thumb {
+                background-color: rgb(61, 61, 61);
+                outline: 1px solid slategrey;
+                border-radius: 50px;
+            }
+
+        .movie-card {
+            background-color: red;
+            border-radius: 10px;
+            box-shadow: 0px 5px 10px rgb(17, 17, 17);
+            cursor: pointer;
+            margin: 20px 15px;
+            position: relative;
+            transition: all 1s;
+        }
+
+            .movie-card:hover {
+                box-shadow: 0px 10px 20px #000000;
+                transform: scale(1.08);
+            }
+
+        .movie-poster {
+            border-radius: 10px 10px 0px 0px;
+        }
+
+        .movie-info {
+            padding: 15px 10px;
+        }
+
+        .movie-title {
+            font-size: 15px;
+            font-weight: 400;
+            letter-spacing: -1px;
+            margin-bottom: 30px;
+        }
+
+        .btn-watch {
+            font-weight: 700;
+            background-color: #005dff;
+            border-radius: 50px;
+            border: 3px solid transparent;
+            color: white;
+            position: absolute;
+            bottom: 0;
+            margin-bottom: 10px;
+        }
+    </style>
+
+    <link rel="stylesheet" href="~/css/site.css" />
+    </style>
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<p>Use this page to detail your site's privacy policy.</p>
+
+
+
+<h1 class="main-header">Movies You Might Like</h1>
+<div class="movie-slider">
+
+
+    <div class="movie-list">
+
+        <div class="movie-card">
+            <img src="http://localhost:5018/logo.jpeg" alt="movie poster" class="movie-poster" />
+            <div class="movie-info">
+                <h1 class="movie-title"> The Company MenThe Company MenThe Company Men</h1>
+                <button class="btn-watch">Watch Now</button>
+            </div>
+        </div>
+        <div class="movie-card">
+            <img src="http://localhost:5018/logo.jpeg" alt="movie poster" class="movie-poster" />
+            <div class="movie-info">
+                <h1 class="movie-title">Joker The Company Men</h1>
+                <button class="btn-watch">Watch Now</button>
+            </div>
+        </div>
+        <div class="movie-card">
+            <img src="http://localhost:5018/logo.jpeg" alt="movie poster" class="movie-poster" />
+            <div class="movie-info">
+                <h1 class="movie-title">Little Women  Little Women</h1>
+                <button class="btn-watch">Watch Now</button>
+            </div>
+        </div>   <div class="movie-card">
+            <img src="http://localhost:5018/logo.jpeg" alt="movie poster" class="movie-poster" />
+            <div class="movie-info">
+                <h1 class="movie-title"> The Company MenThe Company MenThe Company Men</h1>
+                <button class="btn-watch">Watch Now</button>
+            </div>
+        </div>
+        <div class="movie-card">
+            <img src="http://localhost:5018/logo.jpeg" alt="movie poster" class="movie-poster" />
+            <div class="movie-info">
+                <h1 class="movie-title">Joker The Company Men</h1>
+                <button class="btn-watch">Watch Now</button>
+            </div>
+        </div>
+        <div class="movie-card">
+            <img src="http://localhost:5018/logo.jpeg" alt="movie poster" class="movie-poster" />
+            <div class="movie-info">
+                <h1 class="movie-title">Little Women  Little Women</h1>
+                <button class="btn-watch">Watch Now</button>
+            </div>
+        </div>   <div class="movie-card">
+            <img src="http://localhost:5018/logo.jpeg" alt="movie poster" class="movie-poster" />
+            <div class="movie-info">
+                <h1 class="movie-title"> The Company MenThe Company MenThe Company Men</h1>
+                <button class="btn-watch">Watch Now</button>
+            </div>
+        </div>
+        <div class="movie-card">
+            <img src="http://localhost:5018/logo.jpeg" alt="movie poster" class="movie-poster" />
+            <div class="movie-info">
+                <h1 class="movie-title">Joker The Company Men</h1>
+                <button class="btn-watch">Watch Now</button>
+            </div>
+        </div>
+        <div class="movie-card">
+            <img src="http://localhost:5018/logo.jpeg" alt="movie poster" class="movie-poster" />
+            <div class="movie-info">
+                <h1 class="movie-title">Little Women  Little Women</h1>
+                <button class="btn-watch">Watch Now</button>
+            </div>
+        </div>   <div class="movie-card">
+            <img src="http://localhost:5018/logo.jpeg" alt="movie poster" class="movie-poster" />
+            <div class="movie-info">
+                <h1 class="movie-title"> The Company MenThe Company MenThe Company Men</h1>
+                <button class="btn-watch">Watch Now</button>
+            </div>
+        </div>
+        <div class="movie-card">
+            <img src="http://localhost:5018/logo.jpeg" alt="movie poster" class="movie-poster" />
+            <div class="movie-info">
+                <h1 class="movie-title">Joker The Company Men</h1>
+                <button class="btn-watch">Watch Now</button>
+            </div>
+        </div>
+        <div class="movie-card">
+            <img src="http://localhost:5018/logo.jpeg" alt="movie poster" class="movie-poster" />
+            <div class="movie-info">
+                <h1 class="movie-title">Little Women  Little Women</h1>
+                <button class="btn-watch">Watch Now</button>
+            </div>
+        </div>
+    </div>
+</div>

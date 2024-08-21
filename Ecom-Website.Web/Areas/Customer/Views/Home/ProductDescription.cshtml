@@ -1,0 +1,191 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@model ProductDescriptionViewModel
+
+@section Styles {
+
+    <link rel="stylesheet" href="~/css/ProductCarousel.css" />
+}
+
+@if (SignInManager.IsSignedIn(User))
+{
+    var useremail = User.Identity?.Name;
+}
+
+
+<div class="container-fluid" style="background-color:#f8f9fa">
+
+    <div class="row my-2">
+        <div class="col-3">
+            <img id="productImage" class="object-fit-cover border rounded w-100" src="@Model.Product.ImgLink" alt="Product Image" />
+        </div>
+
+
+        <div class="col-5 object-fit-cover border rounded mx-2 bg-white">
+            <div>
+                <h5 id="productName">@Model.Product.ProductName</h5>
+            </div>
+
+            <div>
+                <p class="text-primary">@Model.Product.Category</p>
+                @for (int i = 0; i < 5; i++)
+                {
+                    <i class="bi bi-star-fill"></i>
+                }
+                <p class="text-primary d-inline">@Model.Product.NoOfRatings</p>
+            </div>
+
+            <p class="bg-danger text-white px-2 text-wrap d-inline">On Deal</p>
+
+            <div class="border-top border-dark mt-3">
+                <p>@Model.Product.ProductDescription</p>
+            </div>
+
+        </div>
+
+
+        <div class="col-3 object-fit-cover border rounded bg-white">
+            <h5 class="my-3 d-flex justify-content-end" style="color:#dc3545">Price: $<span id="productPrice">@Model.Product.Price</span></h5>
+            <div>
+                <h6 class="text-primary">FREE Returns</h6>
+                <h6 class="text-primary mt-0">
+                    Free Delivery
+                </h6>
+                <h6 class="text-success">In Stock</h6>
+            </div>
+
+            <div class="row g-3 cartdetails">
+                <input id="productId" hidden asp-for="@Model.Product.ProductId" />
+                <div class="col-auto">
+                    <label for="inputQty" class="form-label">Quantity : </label>
+                </div>
+                <div class="col-auto">
+                    <select id="inputQty" class="form-select" aria-label="Default select example">
+                        <option selected>1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                    </select>
+                </div>
+                <div class="col-12 text-center">
+                    <button id="btnAddToCart" class="m-3 p-2 px-4 bg-warning border-0">Add to cart</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="my-5">
+        @Html.Partial("_ProductCarousel", Model.ProductCarousel)
+    </div>
+
+    <div class="">
+
+        <div class="h4 p-3 object-fit-cover bg-white">Reviews</div>
+
+        <div class="p-5 object-fit-cover border rounded bg-white ">
+
+            <div class="row">
+
+                @foreach (var item in Model.Reviews)
+                {
+                    <div class="col-6 d-inline">
+                        <div class="row align-items-center">
+                            <div class="col-2 text-center">
+                                <div class="rounded-circle">
+                                    <i class="bi bi-person-circle fs-1"></i>
+                                </div>
+                            </div>
+                            <div class="col-10 d-inline p-2">
+                                @if ((item.ReviewContent.Contains(".jpg")))
+                                {
+                                    <img src="@item.ReviewContent" alt="reviewImage" />
+                                }
+                                else if (!(item.ReviewContent == "" || item.ReviewContent == "-"))
+                                {
+                                    <p><strong>Review:</strong>  @item.ReviewContent </p>
+                                }
+                                <p><strong>Ratings:</strong> @item.Rating</p>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts {
+
+    <script>
+
+        $(document).ready(function () {
+
+            $('#btnAddToCart').on('click', function () {
+                var quantity = $('#inputQty').val();
+                var productId = $('#productId').val();
+                var itemPrice = $('#productPrice').text();
+                var productName = $('#productName').text();
+                var productImage = $('#productImage').attr('src');
+                console.log(productName, productImage);
+
+                var pData = {
+                    ProductName: productName,
+                    ProductImage: productImage,
+                    Quantity: quantity,
+                    Price: itemPrice,
+                    ProductId: productId
+                };
+
+
+
+                $.ajax({
+                    type: "POST",
+                    url: '/Customer/Home/ProductAddedToCart',
+                    dataType: "json",
+                    data: pData,
+                    success: function (data) {
+                        console.log(data);
+                        $('#cartCount').text(data.cartCount);
+                        Swal.fire({
+                            title: 'Hoorah! Product Added Successfully',
+                            position: 'top',
+                            showClass: {
+                                popup: `
+                                      animate__animated
+                                      animate__fadeInDown
+                                      animate__faster
+                                     `,
+                            },
+                            hideClass: {
+                                popup: `
+                                      animate__animated
+                                      animate__fadeOutUp
+                                      animate__faster
+                                    `,
+                            },
+                            grow: 'row',
+                            showConfirmButton: false,
+                            showCloseButton: true,
+                        })
+
+
+
+                        // Swal.fire("Hoorah! Product is added to the cart");
+                        console.log('success');
+                        console.log(data);
+                    },
+                    failure: function (res) {
+                        console.log('fail', res);
+                    },
+                    error: function (res) {
+                        console.log('error', res);
+                    }
+                });
+
+            });
+        });
+    </script>
+} 

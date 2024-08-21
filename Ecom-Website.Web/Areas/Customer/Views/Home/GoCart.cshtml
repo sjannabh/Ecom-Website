@@ -1,0 +1,76 @@
+﻿@model Cart
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-10">
+            @foreach (var item in Model.LineItems)
+            {
+                <div id="@item.ProductId" class="row productSection border-bottom border-end border-dark">
+                    <div class="col-3 d-inline">
+                        <img class="pt-2" style="height:200px" src="@item.ProductImage" alt="productImage" />
+                    </div>
+                    <div class="col-7 d-inline">
+                        <div class="align-items-center pt-5">
+                            <strong>@item.ProductName</strong>
+                            <p class="mt-3"><h6 class="d-inline">Price: </h6>$@item.Price</p>
+                            <p><h6 class="d-inline">Total Quantity: </h6>@item.Quantity</p>
+                        </div>
+                    </div>
+                    <div class="col-2 d-inline text-center pt-5">
+                        <button class="removeItemBtn bg-warning border p-2 rounded-3 h6">Remove</button>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="col-2">
+            <div class="text-center h4 text-uppercase text-decoration-underline text-success">Cart Total</div>
+            <p><h5 class="d-inline">Subtotal: </h5><span id="cartSubTotal">$@Model.SubTotal</span></p>
+            <p><h5 class="d-inline">Total: </h5><span id="cartTotal">$@Model.Total</span></p>
+        </div>
+
+    </div>
+</div>
+
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            var cartId = @Html.Raw(Json.Serialize(Model.CartId));
+            //console.log(cartId);
+            $(".removeItemBtn").each(function (index) {
+                $(this).on('click', function () {
+                    var productid = $(this).closest('.productSection').attr('id')
+                    //console.log("productId: " + $(this).closest('.productSection').attr('id'));
+
+                    $.ajax({
+                        type: "DELETE",
+                        url: "https://localhost:7046/api/Cart/deleteLineItem?CartId=" + cartId + "&ProductId=" + productid,
+                        contentType: "application/json",
+                        success: function (data) {
+                            console.log(data);
+                            $('#cartCount').text(data.count);
+                            $('#cartSubTotal').text(data.subTotal);
+                            $('#cartTotal').text(data.total);
+                            console.log($('#' + productid).closest('.productSection').html());
+                            $('#' + productid).closest('.productSection').remove();
+                            console.log("Removed Successfully");
+                            Swal.fire("Removed Successfully");
+                        },
+                        failure: function (jqXHR, textStatus, errorThrown) {
+                            console.log("Failure: HTTP Status: " + jqXHR.status + "; Error Text: " + jqXHR.responseText); // Display error message
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            console.log(jqXHR); // Display error message
+                            console.log("Text: " + textStatus); // Display error message
+                            console.log("Error: " + errorThrown); // Display error message
+                        }
+                    });
+
+                    
+                    //console.log(index + ": " + $(this).text());
+                });
+            });
+        });
+    </script>
+}

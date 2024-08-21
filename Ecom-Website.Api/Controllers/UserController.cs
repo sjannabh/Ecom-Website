@@ -1,6 +1,5 @@
-﻿using Ecom_Website.Api.Repository.IRepository;
-using Ecom_Website.Entity.Models.Mongo;
-using Microsoft.AspNetCore.Http;
+﻿using Ecom_Website.DataAccess.Models.Mongo;
+using Ecom_Website.DataAccess.Repository.IRepository;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Ecom_Website.Api.Controllers
@@ -27,8 +26,12 @@ namespace Ecom_Website.Api.Controllers
         [HttpGet("getAll")]
         public async Task<IActionResult> GetAll()
         {
-           var res = await _userRepository.GetAll();
-           return new JsonResult(res);
+            var rev = await _userRepository.GetAll();
+            if (rev == null)
+            {
+                return NotFound();
+            }
+            return new JsonResult(rev);
         }
 
         //get by Id
@@ -36,6 +39,13 @@ namespace Ecom_Website.Api.Controllers
         public async Task<IActionResult> GetById(string id)
         {
             var res = await _userRepository.GetById(id);
+            return new JsonResult(res);
+        }
+
+        [HttpGet("getByEmail/{email}")]
+        public async Task<IActionResult> GetByEmail(string email)
+        {
+            var res = await _userRepository.GetByIdEmail(email);
             return new JsonResult(res);
         }
 

@@ -1,0 +1,168 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Ecom_Website.Web</title>
+    @* <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" /> *@
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.12.4/dist/sweetalert2.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
+    @await RenderSectionAsync("Styles", required: false)
+
+    <link rel="stylesheet" href="~/Ecom_Website.Web.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light navbar-light border-bottom box-shadow" style="background-color:cadetblue">
+            <div class="container-fluid">
+                <a asp-controller="Home" asp-action="Index">
+                    <img src="~/logo.jpeg" alt="" width="70" height="70" />
+                </a>
+
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <div class="px-3 text-start">
+                        <div class="text-light">Deliver to</div>
+                        <div><strong class="text-light">United States</strong></div>
+                    </div>
+                    <div class="h3 text-white">Welcome Shopper <i class="bi bi-emoji-smile"></i></div>
+                    <form class="d-flex" role="search">
+                        <div class="search-section">
+                            <input class="form-control" type="search" placeholder="Search" aria-label="Search" name="SearchString" id="autocomp">
+                            <ul class="list-group">
+                            </ul>
+                        </div>
+                        <button type="submit" asp-area="Customer" asp-controller="Home" asp-action="SearchbyProductName" class="btn btn-outline-primary bg-info text-light">Search</button>
+                    </form>
+                </div>
+                <partial name="_LoginPartial" />
+
+
+             
+
+                @if (SignInManager.IsSignedIn(User))
+                {
+
+                    <div class="pe-2">
+                        <a class="position-relative text-white" asp-area="customer" asp-controller="Home" asp-action="GoCart">
+                            <i class="bi bi-cart3 fs-3"></i> <div id="cartCount" class="position-absolute top-0 start-100 translate-middle badge rounded-pill text-bg-secondary"> </div>
+                        </a>
+                    </div>
+                }
+                else
+                {
+
+                    <div class="pe-2">
+                        <button id="noUserbtn" class="position-relative border-0 text-white" style="background-color:cadetblue">
+                            <i class="bi bi-cart3 fs-3"></i>
+                        </button>
+                    </div>
+
+                } 
+
+            </div>
+        </nav>
+    </header>
+    <div class="main-section">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        @*  <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3003.612551120119!2d-73.19552440999358!3d41.164804997403095!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89e80e0e8cba1c71%3A0x9c3bc31028d06477!2sUniversity%20of%20Bridgeport!5e0!3m2!1sen!2sus!4v1723047894771!5m2!1sen!2sus" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe> *@
+        <div class="container">
+            &copy; 2024 - Ecom_Website.Web - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    @* <script src="~/lib/jquery/dist/jquery.min.js"></script> *@
+    @* <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script> *@
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://code.jquery.com/ui/1.14.0/jquery-ui.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.12.4/dist/sweetalert2.all.min.js"></script>
+    <script>
+
+        $(document).ready(function () {
+
+            $.ajax({
+                type: "GET",
+                url: "/Customer/Home/GetCartCount",
+                contentType: "application/json",
+                dataType: "json",
+                success: function (response) {
+                    $('#cartCount').text(response.cartCount);
+                }
+            });
+
+            $('#noUserbtn').on('click', function () {
+                Swal.fire("Login to view the cart");
+            });
+
+            $('input').on('input', function () {
+
+                // Get the value from the selected option in a dropdown
+                let inputText = $("input").val();
+
+                const Show = function () {
+                    console.log("Show");
+                }
+
+                const Hide = function () {
+                    console.log("Hide");
+                }
+
+
+
+                if (inputText.length >= 3) {
+
+                    $.ajax({
+                        type: "GET",
+                        url: 'https://localhost:7046/api/Product/GetByName?name=' + inputText, /* List of products */
+                        contentType: "application/json",
+                        dataType: "json",
+                        // data: JSON.stringify({
+                        //     name: inputText
+
+                        // }),
+                        beforeSend: function () {
+                            Show(); // Show loader icon
+                        },
+                        success: function (response) {
+                            $('.search-section ul li').remove();
+
+                            // Looping over product list and display it
+                            $.each(response, function (index, data) {
+                                $('.search-section ul').append('<li class="list-group-item">' + data.product_name + '</li>');
+                            });
+
+                        },
+                        complete: function () {
+                            Hide(); // Hide loader icon
+                        },
+                        failure: function (jqXHR, textStatus, errorThrown) {
+                            console.log("Failure: HTTP Status: " + jqXHR.status + "; Error Text: " + jqXHR.responseText); // Display error message
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            console.log("Error: HTTP Status: " + jqXHR.status + "; Error Text: " + jqXHR.responseText); // Display error message
+                        }
+                    });
+
+
+
+                }
+            });
+        });
+    </script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+
+</body>
+</html>

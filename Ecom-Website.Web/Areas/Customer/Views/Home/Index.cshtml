@@ -1,0 +1,39 @@
+﻿@model HomeViewModel
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+@section Styles {
+
+    <link rel="stylesheet" href="~/css/ProductCarousel.css" />
+}
+
+<div style="background-color:#eaeded">
+    <div>
+        @Html.Partial("_HeroBillBoardCarousel", Model.heroList)
+    </div>
+    <div class="row">
+        @foreach (var item in Model.CategoryGrid)
+        {
+            <div class="col-sm-3">
+                <div class="card m-2 p-2">
+                    <div class="card-body">
+                        <h6 class="card-title">@item.categoryName</h6>
+                    </div>
+                    <img src="~/Images/@item.CategoryImage" class="card-img-bottom p-2" alt="Card1 Image">
+                    <a href="#">See terms and conditions</a>
+                </div>
+            </div>
+        }
+    </div>
+
+    <div>
+        @Html.Partial("_ProductCarousel", Model.Carousel)
+    </div>
+    <div class="text-center p-2">
+        <img class="w-75" src="~/Images/banner_image.jpg" alt="img" />
+    </div>
+
+
+</div>

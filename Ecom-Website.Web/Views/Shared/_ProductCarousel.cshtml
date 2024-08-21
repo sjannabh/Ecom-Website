@@ -1,0 +1,44 @@
+﻿@model ProductCarouselViewModel
+
+@if (Model.Title == "Top Recommended Products")
+{
+    <h4 class="m-3">@Model.Title</h4>
+}
+else if(Model.Title == "Similar Products You MAy Like")
+{
+    <h4 class="m-3">Similar Products You May Like</h4>
+}
+else
+{
+    <h4 class="m-3">@Model.Title</h4>
+}
+
+<div class="product-slider">
+    <div class="product-list">
+
+        @foreach (var item in Model.ProductList)
+        {
+
+            @*  <div class="card m-2 p-2 d-inline-block" style="width: 14rem;"> *@
+            <div class="product-card">
+                <img class="product-image" src="@item.ImgLink" alt="movie poster">
+                <div class="product-details">
+                    <div class="product-name">
+                        <a class="h6" asp-controller="Home" asp-action="ProductDescription" asp-route-productId="@item.ProductId">
+                            @item.ProductName
+                        </a>
+                    </div>
+                    <div>
+                        <p class="product-name">Rating : @item.Rating</p>
+                    </div>
+
+                </div>
+
+
+
+            </div>
+        }
+    </div>
+</div>
+
+

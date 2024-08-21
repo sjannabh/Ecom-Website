@@ -1,6 +1,5 @@
-﻿using Ecom_Website.Api.Repository.IRepository;
-using Ecom_Website.Entity.Models.Mongo;
-using Microsoft.AspNetCore.Http;
+﻿using Ecom_Website.DataAccess.Models.Mongo;
+using Ecom_Website.DataAccess.Repository.IRepository;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Ecom_Website.Api.Controllers
@@ -11,16 +10,17 @@ namespace Ecom_Website.Api.Controllers
     {
         private readonly IProductRepository _productRepository;
 
-        public ProductController(IProductRepository productRepository) {
+        public ProductController(IProductRepository productRepository)
+        {
             _productRepository = productRepository;
         }
 
         //Get all products
         [HttpGet("getAll")]
-        public async Task<IActionResult> GetAllProducts() 
+        public async Task<IActionResult> GetAllProducts()
         {
             var products = await _productRepository.GetAll();
-            if (products == null) 
+            if (products == null)
             {
                 return NotFound();
             }
@@ -32,18 +32,27 @@ namespace Ecom_Website.Api.Controllers
         public async Task<IActionResult> GetById(string id)
         {
             var product = await _productRepository.GetProductById(id);
-            if (product == null) 
+            if (product == null)
             {
                 return NotFound();
             }
             return new JsonResult(product);
         }
 
+        //Get by name
+        [HttpGet("getByName")]
+        public async Task<IActionResult> GetByName(string name, int count = 10)
+        {
+            var productList = await _productRepository.GetProductsByName(name, count);
+            return new JsonResult(productList);
+
+        }
+
         //create a new product
         [HttpPost("create")]
         public async Task CreateProduct(Product prod)
         {
-            
+
             await _productRepository.Create(prod);
         }
 
@@ -52,7 +61,7 @@ namespace Ecom_Website.Api.Controllers
         {
             var product = await _productRepository.GetProductById(productid);
 
-            if(product == null)
+            if (product == null)
             {
                 return NotFound();
             }

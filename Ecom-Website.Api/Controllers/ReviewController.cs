@@ -1,8 +1,6 @@
-﻿using Ecom_Website.Api.Repository.IRepository;
-using Ecom_Website.Entity.Models.Mongo;
-using Microsoft.AspNetCore.Http;
+﻿using Ecom_Website.DataAccess.Models.Mongo;
+using Ecom_Website.DataAccess.Repository.IRepository;
 using Microsoft.AspNetCore.Mvc;
-using System.Reflection.Metadata.Ecma335;
 
 namespace Ecom_Website.Api.Controllers
 {
@@ -26,10 +24,10 @@ namespace Ecom_Website.Api.Controllers
 
         //Get all reviews
         [HttpGet("getAll")]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll(int count = 10)
         {
-            var rev = await _reviewRepository.GetAll();
-            if(rev == null)
+            var rev = await _reviewRepository.GetAll(count);
+            if (rev == null)
             {
                 return NotFound();
             }
@@ -37,22 +35,29 @@ namespace Ecom_Website.Api.Controllers
         }
 
         //Get by ProductId
-        [HttpGet("get/{id}")]
+        [HttpGet("getById/{id}")]
         public async Task<IActionResult> GetById(string id)
         {
-            var rev = await _reviewRepository.GetReviewById(id);
-            if(rev == null)
+            var rev = await _reviewRepository.GetById(id);
+            if (rev == null)
             {
                 return NotFound();
             }
             return new JsonResult(rev);
         }
 
+        [HttpGet("getByProductId/{productId}")]
+        public async Task<IActionResult> GetByProductId(string productId)
+        {
+            var response = await _reviewRepository.GetReviewByProductId(productId);
+            return new JsonResult(response);
+        }
+
         //Update review
         [HttpPut("update")]
         public async Task<IActionResult> Update(string id, Review review)
         {
-            var item = await _reviewRepository.GetReviewById(id);
+            var item = await _reviewRepository.GetById(id);
 
             if (item == null)
             {
@@ -68,8 +73,8 @@ namespace Ecom_Website.Api.Controllers
 
         public async Task<IActionResult> Delete(string id)
         {
-            var item = _reviewRepository.GetReviewById(id);
-            if(item == null)
+            var item = _reviewRepository.GetById(id);
+            if (item == null)
             {
                 return NotFound();
             }

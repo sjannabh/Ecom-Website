@@ -1,0 +1,22 @@
+﻿@model IEnumerable<Product>
+
+<table class="m-5">
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td class="col-2 object-fit-cover border rounded mx-2 bg-white">
+                <div>
+
+                    <img src="@item.ImgLink" />
+                </div>
+            </td>
+            <td class="col-7 object-fit-cover border rounded mx-2 bg-white">
+                <div class="h5 p-3">
+                    <a asp-area="Customer" asp-controller="Home" asp-action="ProductDescription" asp-route-productId ="@item.ProductId">
+                        @item.ProductName
+                    </a>
+                </div>
+            </td>
+        </tr>
+    }
+</table>

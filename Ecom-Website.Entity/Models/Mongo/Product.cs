@@ -1,8 +1,10 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using Newtonsoft.Json;
+using System.ComponentModel;
 using System.Text.Json.Serialization;
 
-namespace Ecom_Website.Entity.Models.Mongo
+namespace Ecom_Website.DataAccess.Models.Mongo
 {
     public class Product
     {
@@ -11,7 +13,7 @@ namespace Ecom_Website.Entity.Models.Mongo
         [JsonPropertyName("_id")]
         public string? Id { get; set; }
 
-
+        [DisplayName("Product Id")]
         [JsonPropertyName("product_id")]
         [BsonElement("product_id")]
         public string ProductId { get; set; }
@@ -28,13 +30,13 @@ namespace Ecom_Website.Entity.Models.Mongo
         [BsonElement("price")]
         public double Price { get; set; }
 
-        [JsonPropertyName("img_link")]
+        [JsonProperty("img_link")]
         [BsonElement("img_link")]
-        public string ImgLink { get; set; }
+        public string? ImgLink { get; set; }
 
         [JsonPropertyName("product_link")]
         [BsonElement("product_link")]
-        public string ProductLink { get; set; }
+        public string? ProductLink { get; set; }
 
         [JsonPropertyName("product_description")]
         [BsonElement("product_description")]
